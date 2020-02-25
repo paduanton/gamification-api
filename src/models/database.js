@@ -39,27 +39,50 @@ export class Database {
         }
     }
 
+    select = () => {
+        const sql = 'SELECT * FROM report';
+
+        _query(sql, (error, result) => {
+            console.log('errorUpdate', error)
+            console.log('updateResult', result)
+        });
+    }
+
     insert = (table, dataObject) => {
         const keys = Object.keys(dataObject)
         const values = Object.values(dataObject)
 
         const keysQuery = keys.toString();
         const valuesQuery = values.toString();
+
+        const sql = `INSERT INTO ${table} (${keysQuery}) VALUES (${valuesQuery})`
+        
+        _query(sql, (error, result) => {
+            console.log('errorInsert', error)
+            console.log('insertResult', result)
+        });
     }
 
     update = (table, dataObject, id) => {
-        const keys = Object.keys(dataObject)
-        const values = Object.values(dataObject)
+        try {
+            const keys = Object.keys(dataObject)
+            const values = Object.values(dataObject)
 
-        let setQuery = ''
+            let setQuery = ''
 
-        for (index in keys) {
-            setQuery += `${keys[index]} = ${values[index]},`
+            for (index in keys) {
+                setQuery += `${keys[index]} = ${values[index]},`
+            }
+
+            const set = setQuery.substring(0, setQuery.length - 1);
+            const sql = `UPDATE ${table} SET ${set} WHERE id = ${id}`;
+
+            _query(sql, (error, result) => {
+                console.log('errorUpdate', error)
+                console.log('updateResult', result)
+            });
+        } catch (error) {
+            console.log('update', error)
         }
-
-        const set = setQuery.substring(0, setQuery.length - 1);
-
-        const sql = `UPDATE ${table} SET ${set} WHERE id = ${id}`;
-
     }
 }

@@ -1,5 +1,5 @@
 
-import { addReport, getReports, getReports, updateReports, deleteReport } from '../controllers/report'
+import { addReport, getReport, getReports, updateReports, deleteReport } from '../controllers/report'
  
 const routes = (app) => {
     app.route('/report')
