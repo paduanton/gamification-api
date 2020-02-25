@@ -8,7 +8,7 @@ const routes = (app) => {
  
     app.route('/report/:id')
         .get(getReport)
-        .put(updateReports)
+        .put(putReports)
         .delete(deleteReport)
 }
  

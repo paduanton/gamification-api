@@ -39,12 +39,21 @@ export class Database {
         }
     }
 
-    select = () => {
-        const sql = 'SELECT * FROM report';
+    select = (table) => {
+        const sql = `SELECT * FROM ${table}`;
 
         _query(sql, (error, result) => {
-            console.log('errorUpdate', error)
-            console.log('updateResult', result)
+            console.log('errorSelect', error)
+            console.log('selectResult', result)
+        });
+    }
+
+    selectById = (table, id) => {
+        const sql = `SELECT * FROM ${table} WHERE id = ${id}`;
+
+        _query(sql, (error, result) => {
+            console.log('errorSelectId', error)
+            console.log('resultSelectId', result)
         });
     }
 

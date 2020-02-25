@@ -1,11 +1,11 @@
-export class Report {
+export class ReportModel {
 
-    constructor(userId, post, helpful, description, approved) {
-        this[userId] = userId;
-        this[post] = post;
-        this[helpful] = helpful;
-        this[description] = description;
-        this[approved] = approved;
+    constructor(object) {
+        this[userId] = object.userId;
+        this[post] = object.post;
+        this[helpful] = object.helpful;
+        this[description] = object.description;
+        this[approved] = object.approved;
     }
 
     save = () => {
