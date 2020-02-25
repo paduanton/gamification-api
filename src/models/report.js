@@ -1,4 +1,5 @@
-export class ReportModel {
+import DatabaseModel from './database'
+export class ReportModel extends DatabaseModel {
 
     constructor(object) {
         this[userId] = object.userId;
@@ -6,10 +7,11 @@ export class ReportModel {
         this[helpful] = object.helpful;
         this[description] = object.description;
         this[approved] = object.approved;
+        this[table] = 'report';
     }
 
     constructor() {
-        
+
     }
 
     save = () => {

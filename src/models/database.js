@@ -1,7 +1,7 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
 
-export class Database {
+export class DatabaseModel {
 
     constructor() {
         dotenv.config();
