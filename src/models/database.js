@@ -17,21 +17,49 @@ export class Database {
         });
     }
 
-    query = (sql, callback) => {
-        this[pool].getConnection((err, connection) => {
-            if (err) {
-                return callback(err, null);
-            } else {
-                if (connection) {
-                    connection.query(sql, function (error, results, fields) {
-                        connection.release();
-                        if (error) {
-                            return callback(error, null);
-                        }
-                        return callback(null, results);
-                    });
+    _query = (sql, callback) => {
+        try {
+            this[pool].getConnection((err, connection) => {
+                if (err) {
+                    return callback(err, null);
+                } else {
+                    if (connection) {
+                        connection.query(sql, function (error, results, fields) {
+                            connection.release();
+                            if (error) {
+                                return callback(error, null);
+                            }
+                            return callback(null, results);
+                        });
+                    }
                 }
-            }
-        });
+            });
+        } catch (error) {
+            console.log("query", error)
+        }
+    }
+
+    insert = (table, dataObject) => {
+        const keys = Object.keys(dataObject)
+        const values = Object.values(dataObject)
+
+        const keysQuery = keys.toString();
+        const valuesQuery = values.toString();
+    }
+
+    update = (table, dataObject, id) => {
+        const keys = Object.keys(dataObject)
+        const values = Object.values(dataObject)
+
+        let setQuery = ''
+
+        for (index in keys) {
+            setQuery += `${keys[index]} = ${values[index]},`
+        }
+
+        const set = setQuery.substring(0, setQuery.length - 1);
+
+        const sql = `UPDATE ${table} SET ${set} WHERE id = ${id}`;
+
     }
 }
