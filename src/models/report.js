@@ -8,6 +8,10 @@ export class ReportModel {
         this[approved] = object.approved;
     }
 
+    constructor() {
+        
+    }
+
     save = () => {
 
     }
@@ -25,6 +29,6 @@ export class ReportModel {
     }
 
     remove = () => {
-        
+
     }
 }
