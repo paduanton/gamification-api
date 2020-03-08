@@ -26,3 +26,14 @@ export function getReport(req, response) {
         response.status(200).json(data);
     });
 }
+
+export function postReport(req, response) {
+    const { user_id, post, helpful, description, approved } = req.body;
+
+    model.save(req.params.id, (data) => {
+        if (data == null) {
+            response.status(404).json({});
+        }
+        response.status(200).json(data);
+    });
+}

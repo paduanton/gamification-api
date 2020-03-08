@@ -55,25 +55,32 @@ class DatabaseModel {
         }
     }
 
-    insert(table, dataObject) {
-        const keys = Object.keys(dataObject)
-        const values = Object.values(dataObject)
+    insert(callback) {
+        const keys = Object.keys(this.modelObject)
+        const values = Object.values(this.modelObject)
 
         const keysQuery = keys.toString();
         const valuesQuery = values.toString();
 
-        const sql = `INSERT INTO ${table} (${keysQuery}) VALUES (${valuesQuery})`
+        const sql = `INSERT INTO ${this.table} (${keysQuery}) VALUES (${valuesQuery})`
 
-        _query(sql, (error, result) => {
-            console.log('errorInsert', error)
-            console.log('insertResult', result)
-        });
+        try {
+            this.connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log("err durante insert(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result[0]);
+            });
+        } catch (error) {
+            console.log('insert', error)
+        }
     }
 
-    update(table, dataObject, id) {
+    update(id, modelObject, callback) {
         try {
-            const keys = Object.keys(dataObject)
-            const values = Object.values(dataObject)
+            const keys = Object.keys(modelObject)
+            const values = Object.values(modelObject)
 
             let setQuery = ''
 
@@ -82,11 +89,14 @@ class DatabaseModel {
             }
 
             const set = setQuery.substring(0, setQuery.length - 1);
-            const sql = `UPDATE ${table} SET ${set} WHERE id = ${id}`;
+            const sql = `UPDATE ${this.table} SET ${set} WHERE id = ${id}`;
 
-            _query(sql, (error, result) => {
-                console.log('errorUpdate', error)
-                console.log('updateResult', result)
+            this.connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log("err durante update(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result[0]);
             });
         } catch (error) {
             console.log('update', error)

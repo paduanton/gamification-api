@@ -1,10 +1,10 @@
 
-import { getReports, getReport } from '../controllers/reports'
+import { getReports, getReport, postReport } from '../controllers/reports'
 
 const routes = (app) => {
     app.route('/reports')
         .get(getReports)
-    //     .post(postReport)
+        .post(postReport)
 
     app.route('/reports/:id')
         .get(getReport)

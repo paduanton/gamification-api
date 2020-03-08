@@ -8,7 +8,12 @@ class ReportsModel extends DatabaseModel {
     }
 
     save() {
-
+        super.insert((err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
     }
 
     find(callback) {
