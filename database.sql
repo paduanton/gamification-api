@@ -1,7 +1,7 @@
 CREATE DATABASE kingplay;
 USE kingplay;
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `last name` varchar(70) NOT NULL,
@@ -15,14 +15,21 @@ CREATE TABLE `user` (
     'comercial',
     'financeiro',
     'marketing',
-    'sucesso do cliente'
+    'sucesso do cliente',
+    'administrativo',
+    'departamento pessoal',
+    'recursos humanos',
+    'jurídico',
+    'manutenção',
+    'monitoria de qualidade',
+    'ouvidoria'
   ) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
 
-CREATE TABLE `report` (
+CREATE TABLE `reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `post` varchar(255) NOT NULL,
@@ -32,5 +39,5 @@ CREATE TABLE `report` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL  DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES user(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  FOREIGN KEY (`user_id`) REFERENCES users (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4; 
