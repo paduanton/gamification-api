@@ -40,13 +40,19 @@ class DatabaseModel {
         }
     }
 
-    selectById(table, id) {
-        const sql = `SELECT * FROM ${table} WHERE id = ${id}`;
-
-        _query(sql, (error, result) => {
-            console.log('errorSelectId', error)
-            console.log('resultSelectId', result)
-        });
+    selectById(id, callback) {
+        const sql = `SELECT * FROM ${this.table} WHERE id = ${id}`;
+        try {
+            this.connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log("err durante selectById(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result[0]);
+            });
+        } catch (error) {
+            console.log('selectById', error)
+        }
     }
 
     insert(table, dataObject) {

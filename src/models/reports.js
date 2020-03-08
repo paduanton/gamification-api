@@ -20,8 +20,13 @@ class ReportsModel extends DatabaseModel {
         });
     }
 
-    findById() {
-
+    findById(id, callback) {
+        super.selectById(id, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
     }
 
     findOneAndUpdate() {
