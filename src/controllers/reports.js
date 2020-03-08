@@ -1,17 +1,11 @@
-import ReportModel from '../models/reports'
-// export class ReportController {
+import ReportsModel from '../models/reports'
 
-    // constructor() {
-       
-    // }
+const model = new ReportsModel();
 
-    export function getReports (req, res) {
-        const model = new ReportModel();
-        model.find(( reports) => {
-            // if (error) { res.json(error) }
-            
-            res.json(reports)
-        })
-    }
+export function getReports(req, res) {
+    model.find((reports) => {
+        // if (error) { res.json(error) }
 
-// }
+        res.status(400).json(reports)
+    })
+}

@@ -1,15 +1,10 @@
 import DatabaseModel from './database'
 
-class ReportModel extends DatabaseModel {
+class ReportsModel extends DatabaseModel {
 
-    constructor() {
-        // this[userId] = object.userId;
-        // this[post] = object.post;
-        // this[helpful] = object.helpful;
-        // this[description] = object.description;
-        // this[approved] = object.approved;
+    constructor(reportObject) {
         const table = 'reports';
-        super(table)
+        super(table, reportObject);
     }
 
     save() {
@@ -21,7 +16,6 @@ class ReportModel extends DatabaseModel {
             if (err) {
                 callback(err);
             }
-
             callback(data);
         });
     }
@@ -39,4 +33,4 @@ class ReportModel extends DatabaseModel {
     }
 }
 
-module.exports = ReportModel;
+module.exports = ReportsModel;

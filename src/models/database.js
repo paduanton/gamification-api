@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 
 class DatabaseModel {
 
-    constructor(table) {
+    constructor(table, modelObject) {
         dotenv.config();
 
-         this.connection = mysql.createConnection({
+        this.connection = mysql.createConnection({
             host: `${process.env.DB_HOST}`,
             port: `${process.env.DB_PORT}`,
             user: `${process.env.DB_USER}`,
@@ -22,19 +22,22 @@ class DatabaseModel {
         });
 
         this.table = table;
+        this.modelObject = modelObject;
     }
 
     select(callback) {
         const sql = `SELECT * FROM ${this.table}`;
-
-        this.connection.query(sql,  (err, result) => {
-            if (err) {
-                console.log("err durante select(): " + err);
-                callback(err, null);
-            }
-            callback(null, result);
-        });
-
+        try {
+            this.connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log("err durante select(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result);
+            });
+        } catch (error) {
+            console.log('select', error)
+        }
     }
 
     selectById(table, id) {
