@@ -1,15 +1,15 @@
 
-import { postReport, getReport, getReports, putReport, deleteReport } from '../controllers/reports'
+import { getReports  } from '../controllers/reports'
 
 const routes = (app) => {
     app.route('/reports')
         .get(getReports)
-        .post(postReport)
+    //     .post(postReport)
 
-    app.route('/reports/:id')
-        .get(getReport)
-        .put(putReport)
-        .delete(deleteReport)
+    // app.route('/reports/:id')
+    //     .get(getReport)
+    //     .put(putReport)
+    //     .delete(deleteReport)
 }
 
 export default routes

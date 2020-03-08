@@ -1,36 +1,42 @@
 import DatabaseModel from './database'
-export class ReportModel extends DatabaseModel {
 
-    constructor(object) {
-        this[userId] = object.userId;
-        this[post] = object.post;
-        this[helpful] = object.helpful;
-        this[description] = object.description;
-        this[approved] = object.approved;
-        this[table] = 'reports';
-    }
+class ReportModel extends DatabaseModel {
 
     constructor() {
+        // this[userId] = object.userId;
+        // this[post] = object.post;
+        // this[helpful] = object.helpful;
+        // this[description] = object.description;
+        // this[approved] = object.approved;
+        const table = 'reports';
+        super(table)
+    }
+
+    save() {
 
     }
 
-    save = () => {
+    find(callback) {
+        super.select((err, data) => {
+            if (err) {
+                callback(err);
+            }
+
+            callback(data);
+        });
+    }
+
+    findById() {
 
     }
 
-    find = () => {
+    findOneAndUpdate() {
 
     }
 
-    findById = () => {
-
-    }
-
-    findOneAndUpdate = () => {
-
-    }
-
-    remove = () => {
+    remove() {
 
     }
 }
+
+module.exports = ReportModel;
