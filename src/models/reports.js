@@ -43,7 +43,7 @@ class ReportsModel extends DatabaseModel {
         });
     }
 
-    remove() {
+    remove(id, callback) {
         super.delete(id, (err, data) => {
             if (err) {
                 callback(err);

@@ -3,9 +3,9 @@ import ReportsModel from '../models/reports'
 const model = new ReportsModel();
 
 export function getReports(request, response) {
-    if (request.body != null) {
+    if (!request.body) {
         response.status(400).json({
-            error: "GET request must not have a body"
+            error: "DELETE request must not have a body"
         });
     }
 
@@ -33,13 +33,14 @@ export function getReport(request, response) {
         });
     }
 
-    if (request.body != null) {
+    if (!request.body) {
         response.status(400).json({
-            error: "GET request must not have a body"
+            error: "DELETE request must not have a body"
         });
     }
 
     model.findById(id, (data) => {
+
         if (data == null) {
             response.status(404);
         }
@@ -91,7 +92,7 @@ export function putReport(request, response) {
 
     const newModel = new ReportsModel(requestBody);
     newModel.findOneAndUpdate(id, (data) => {
-        
+
         if (data.affectedRows === 1) {
             response.status(204);
         }
@@ -108,14 +109,13 @@ export function deleteReport(request, response) {
         });
     }
 
-    if (request.body != null) {
+    if (!request.body) {
         response.status(400).json({
             error: "DELETE request must not have a body"
         });
     }
 
     model.remove(id, (data) => {
-        console.log(data)
-        response.status(200).json(data);
+        response.status(204);
     });
 }
