@@ -5,7 +5,7 @@ const model = new ReportsModel();
 export function getReports(request, response) {
     if (request.body != null) {
         response.status(400).json({
-            error: "DELETE request must not have a body"
+            error: "GET request must not have a body"
         });
     }
 
@@ -35,7 +35,7 @@ export function getReport(request, response) {
 
     if (request.body != null) {
         response.status(400).json({
-            error: "DELETE request must not have a body"
+            error: "GET request must not have a body"
         });
     }
 

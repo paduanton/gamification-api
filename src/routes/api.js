@@ -13,8 +13,10 @@ const routes = (app) => {
         .delete(deleteReport)
 
     app.route('/users')
-        .get(getUser)
         .post(postUser)
+
+    app.route('/users/:id')
+        .get(getUser)
 }
 
 export default routes

@@ -1,4 +1,8 @@
-export function getReport(request, response) {
+import UsersModel from '../models/users'
+
+const model = new UsersModel();
+
+export function getUser(request, response) {
     const id = request.params.id;
 
     if (id != Number(id)) {
@@ -9,7 +13,7 @@ export function getReport(request, response) {
 
     if (request.body != null) {
         response.status(400).json({
-            error: "DELETE request must not have a body"
+            error: "GET request must not have a body"
         });
     }
 
@@ -22,11 +26,11 @@ export function getReport(request, response) {
     });
 }
 
-export function postReport(request, response) {
+export function postUser(request, response) {
     const requestBody = request.body;
 
     if (requestBody == null) {
-        response.status(400).json({
+        return response.status(400).json({
             error: "POST request must have a body"
         });
     }
@@ -37,7 +41,7 @@ export function postReport(request, response) {
         });
     }
 
-    const newModel = new ReportsModel(requestBody);
+    const newModel = new UsersModel(requestBody);
     newModel.save((data) => {
         if (data.code) {
             response.status(400).json({
