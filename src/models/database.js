@@ -56,47 +56,49 @@ class DatabaseModel {
     }
 
     insert(callback) {
-        const keys = Object.keys(this.modelObject)
-        const values = Object.values(this.modelObject)
-
-        const keysQuery = keys.toString();
-        const valuesQuery = values.toString();
-
-        const sql = `INSERT INTO ${this.table} (${keysQuery}) VALUES (${valuesQuery})`
-
+        const sql = `INSERT INTO ${this.table} SET ?`
         try {
-            this.connection.query(sql, (err, result) => {
+            this.connection.query(sql, this.modelObject, (err, result) => {
                 if (err) {
                     console.log("err durante insert(): " + err);
                     callback(err, null);
                 }
-                callback(null, result[0]);
+                this.selectById(result.insertId, (err, data) => {
+                    if (err) {
+                        throw err;
+                    }
+                    callback(data);
+                });
             });
         } catch (error) {
             console.log('insert', error)
         }
     }
 
-    update(id, modelObject, callback) {
+    update(id, callback) {
+        const sql = `UPDATE ${this.table} SET ? WHERE id = ${id}`;
         try {
-            const keys = Object.keys(modelObject)
-            const values = Object.values(modelObject)
+            this.connection.query(sql, this.modelObject, (err, result) => {
+                if (err) {
+                    console.log("err durante update(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result);
+            });
+        } catch (error) {
+            console.log('update', error)
+        }
+    }
 
-            let setQuery = ''
-
-            for (index in keys) {
-                setQuery += `${keys[index]} = ${values[index]},`
-            }
-
-            const set = setQuery.substring(0, setQuery.length - 1);
-            const sql = `UPDATE ${this.table} SET ${set} WHERE id = ${id}`;
-
+    delete(id, callback) {
+        const sql = `DELETE FROM ${this.table} WHERE id = ${id}`;
+        try {
             this.connection.query(sql, (err, result) => {
                 if (err) {
                     console.log("err durante update(): " + err);
                     callback(err, null);
                 }
-                callback(null, result[0]);
+                callback(null, result);
             });
         } catch (error) {
             console.log('update', error)

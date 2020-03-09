@@ -7,7 +7,7 @@ class ReportsModel extends DatabaseModel {
         super(table, reportObject);
     }
 
-    save() {
+    save(callback) {
         super.insert((err, data) => {
             if (err) {
                 callback(err);
@@ -34,12 +34,22 @@ class ReportsModel extends DatabaseModel {
         });
     }
 
-    findOneAndUpdate() {
-
+    findOneAndUpdate(id, callback) {
+        super.update(id, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
     }
 
     remove() {
-
+        super.delete(id, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
     }
 }
 
