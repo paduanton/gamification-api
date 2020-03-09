@@ -3,7 +3,7 @@ import ReportsModel from '../models/reports'
 const model = new ReportsModel();
 
 export function getReports(request, response) {
-    if(request.body != null) {
+    if (request.body != null) {
         response.status(400).json({
             error: "GET request must not have a body"
         });
@@ -17,7 +17,7 @@ export function getReports(request, response) {
         }
 
         if (data.length === 0) {
-            response.status(404).json([]);
+            response.status(404);
         }
 
         response.status(200).json(data);
@@ -33,7 +33,7 @@ export function getReport(request, response) {
         });
     }
 
-    if(request.body != null) {
+    if (request.body != null) {
         response.status(400).json({
             error: "GET request must not have a body"
         });
@@ -41,7 +41,7 @@ export function getReport(request, response) {
 
     model.findById(id, (data) => {
         if (data == null) {
-            response.status(404).json({});
+            response.status(404);
         }
         response.status(200).json(data);
     });
@@ -77,6 +77,12 @@ export function putReport(request, response) {
     const requestBody = request.body;
     const id = request.params.id;
 
+    if (id != Number(id)) {
+        response.status(400).json({
+            error: "id param must be int"
+        });
+    }
+
     if (requestBody.constructor.name !== "Object") {
         response.status(400).json({
             error: "request body is not properly formated"
@@ -85,20 +91,31 @@ export function putReport(request, response) {
 
     const newModel = new ReportsModel(requestBody);
     newModel.findOneAndUpdate(id, (data) => {
-        // if (data.code) {
-        //     response.status(400).json({
-        //         code: data.errno,
-        //         message: data.sqlMessage,
-        //         serverMessage: data.code
-        //     });
-        // }
-        // if (data.id) {
-            response.status(204).json(data);
-        // }
-
-        // response.status(503).json(data);
+        
+        if (data.affectedRows === 1) {
+            response.status(204);
+        }
+        response.status(404).json();
     });
 }
 
 export function deleteReport(request, response) {
+    const id = request.params.id;
+
+    if (id != Number(id)) {
+        response.status(400).json({
+            error: "id param must be int"
+        });
+    }
+
+    if (request.body != null) {
+        response.status(400).json({
+            error: "DELETE request must not have a body"
+        });
+    }
+
+    model.remove(id, (data) => {
+        console.log(data)
+        response.status(200).json(data);
+    });
 }
