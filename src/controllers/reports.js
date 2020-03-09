@@ -3,7 +3,7 @@ import ReportsModel from '../models/reports'
 const model = new ReportsModel();
 
 export function getReports(request, response) {
-    if (!request.body) {
+    if (request.body != null) {
         response.status(400).json({
             error: "DELETE request must not have a body"
         });
@@ -33,7 +33,7 @@ export function getReport(request, response) {
         });
     }
 
-    if (!request.body) {
+    if (request.body != null) {
         response.status(400).json({
             error: "DELETE request must not have a body"
         });
@@ -50,6 +50,12 @@ export function getReport(request, response) {
 
 export function postReport(request, response) {
     const requestBody = request.body;
+
+    if (requestBody == null) {
+        response.status(400).json({
+            error: "POST request must have a body"
+        });
+    }
 
     if (requestBody.constructor.name !== "Object") {
         response.status(400).json({
@@ -77,6 +83,12 @@ export function postReport(request, response) {
 export function putReport(request, response) {
     const requestBody = request.body;
     const id = request.params.id;
+    
+    if (requestBody == null) {
+        response.status(400).json({
+            error: "PUT request must have a body"
+        });
+    }
 
     if (id != Number(id)) {
         response.status(400).json({
@@ -92,11 +104,15 @@ export function putReport(request, response) {
 
     const newModel = new ReportsModel(requestBody);
     newModel.findOneAndUpdate(id, (data) => {
-
         if (data.affectedRows === 1) {
-            response.status(204);
+            response.status(204);        
         }
-        response.status(404).json();
+
+        if (data.affectedRows === 0) {
+            response.status(404).json();
+        }
+
+        response.status(503).json(data);
     });
 }
 
@@ -109,13 +125,21 @@ export function deleteReport(request, response) {
         });
     }
 
-    if (!request.body) {
+    if (request.body != null) {
         response.status(400).json({
             error: "DELETE request must not have a body"
         });
     }
 
     model.remove(id, (data) => {
-        response.status(204);
+        if (data.affectedRows === 1) {
+            response.status(204);        
+        }
+
+        if (data.affectedRows === 0) {
+            response.status(404).json();
+        }
+
+        response.status(503).json(data);
     });
 }

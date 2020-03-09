@@ -1,5 +1,6 @@
 
 import { getReports, getReport, postReport, putReport, deleteReport } from '../controllers/reports'
+import { getUser, postUser } from '../controllers/users'
 
 const routes = (app) => {
     app.route('/reports')
@@ -12,7 +13,8 @@ const routes = (app) => {
         .delete(deleteReport)
 
     app.route('/users')
-        // .post(postUser)
+        .get(getUser)
+        .post(postUser)
 }
 
 export default routes
