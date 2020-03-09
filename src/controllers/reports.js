@@ -68,7 +68,7 @@ export function postReport(request, response) {
 
         if(!data) {
             return response.status(500).json({
-                error: "can't post data"
+                error: "can't POST data"
             });
         }
 
@@ -111,13 +111,27 @@ export function putReport(request, response) {
     }
 
     const newModel = new ReportsModel(requestBody);
-    newModel.findOneAndUpdate(id, (data) => {
+    newModel.findOneAndUpdate(id, (data) => {    
+        if(!data) {
+            return response.status(500).json({
+                error: "can't POST data"
+            });
+        }
+
+        if (data.hasOwnProperty("code")) {
+            return response.status(400).json({
+                code: data.errno,
+                message: data.sqlMessage,
+                serverMessage: data.code
+            });
+        }
+
         if (data.affectedRows === 1) {
-            return response.status(204);
+            return response.status(204).json({});
         }
 
         if (data.affectedRows === 0) {
-            return response.status(404).json();
+            return response.status(404).json({});
         }
 
         return response.status(503).json(data);
@@ -141,7 +155,7 @@ export function deleteReport(request, response) {
 
     model.remove(id, (data) => {
         if (data.affectedRows === 1) {
-            return response.status(204);
+            return response.status(204).json({});
         }
 
         if (data.affectedRows === 0) {

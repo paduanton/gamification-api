@@ -44,7 +44,7 @@ export function postUser(request, response) {
     newModel.save((data) => {
         if(!data) {
             return response.status(500).json({
-                error: "can't post data"
+                error: "can't POST data"
             });
         }
 
@@ -54,6 +54,10 @@ export function postUser(request, response) {
                 message: data.sqlMessage,
                 serverMessage: data.code
             });
+        }
+
+        if (data.id) {
+            return response.status(201).json(data);
         }
 
         return response.status(503).json(data);
