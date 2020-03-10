@@ -32,7 +32,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `users_id` int NOT NULL,
-  `post` varchar(255) NOT NULL,
+  `post_url` varchar(255) NOT NULL,
+  `provider` enum(
+    'wiki interna',
+    'wiki externa'
+    ) NOT NULL,
   `helpful` boolean NOT NULL,
   `description` varchar(10000) NOT NULL,
   `approved` boolean,
