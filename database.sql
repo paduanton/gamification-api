@@ -1,8 +1,21 @@
 CREATE DATABASE kingplay;
 USE kingplay;
 
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` enum(
+    'especialist',
+    'admin',
+    'default'
+    ) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4; 
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `roles_id` int NOT NULL,
   `name` varchar(30) NOT NULL,
   `last_name` varchar(70) NOT NULL,
   `intranet_login` varchar(25) UNIQUE NOT NULL,
@@ -21,12 +34,14 @@ CREATE TABLE IF NOT EXISTS `users` (
     'recursos humanos',
     'jurídico',
     'manutenção',
+    'processos e qualidade',
     'monitoria de qualidade',
     'ouvidoria'
   ) NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`roles_id`) REFERENCES roles (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `reports` (
@@ -46,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   FOREIGN KEY (`users_id`) REFERENCES users (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4; 
 
-CREATE TABLE IF NOT EXISTS `reports_score` (
+CREATE TABLE IF NOT EXISTS `users_reports_score` (
   `id` int NOT NULL AUTO_INCREMENT,
   `users_id` int NOT NULL,
   `reports_id`int NOT NULL,
@@ -62,6 +77,24 @@ CREATE TABLE IF NOT EXISTS `leaderboards` (
   `id` int NOT NULL AUTO_INCREMENT,
   `users_id` int NOT NULL UNIQUE,
   `total_score` int NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`users_id`) REFERENCES users (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS `scores_history` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `users_id` int NOT NULL UNIQUE,
+  `type` enum(
+    'reporte'
+    ) NOT NULL,
+  `value` enum(
+    '50',
+    '70',
+    '60',
+    '80'
+    ) NOT NULL,  
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
