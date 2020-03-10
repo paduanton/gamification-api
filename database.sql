@@ -65,7 +65,12 @@ CREATE TABLE IF NOT EXISTS `users_reports_score` (
   `id` int NOT NULL AUTO_INCREMENT,
   `users_id` int NOT NULL,
   `reports_id`int NOT NULL,
-  `value` int NOT NULL,
+  `value` enum(
+    '50',
+    '70',
+    '60',
+    '80'
+    ) NOT NULL, 
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
