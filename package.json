@@ -1,7 +1,7 @@
 {
   "name": "gamification-api",
   "version": "1.0.0",
-  "description": "Resftul Gamification API for content production purposes",
+  "description": "Resftul Gamification API that's a part of a project to stimulate knowledge consumption for content production purposes",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
