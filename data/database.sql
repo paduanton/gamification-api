@@ -90,9 +90,9 @@ CREATE TABLE IF NOT EXISTS `leaderboards` (
 
 CREATE TABLE IF NOT EXISTS `scores_history` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `users_id` int NOT NULL UNIQUE,
-  `type` enum(
-    'reporte'
+  `users_id` int NOT NULL,
+  `type` enum(  
+    'reports'
     ) NOT NULL,
   `value` enum(
     '50',
