@@ -29,8 +29,8 @@ services:
       - 3307:3306
     volumes:
       - ./dev.mysql.cnf:/etc/mysql/conf.d/my_custom.cnf
-      - ./data/local:/var/lib/mysql
-      - ./data/database.sql:/docker-entrypoint-initdb.d/local.sql
+      - ./data/database:/var/lib/mysql
+      - ./data/database.sql:/docker-entrypoint-initdb.d/database.sql
     environment:
       - VIRTUAL_HOST=gamification-database
       - MYSQL_DATABASE=gamification
@@ -43,6 +43,6 @@ services:
     ports:
       - 8989:80
     links:
-      - db
+      - database
     
       

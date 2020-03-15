@@ -1,5 +1,5 @@
-CREATE DATABASE kingplay;
-USE kingplay;
+CREATE DATABASE gamification;
+USE gamification;
 
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
