@@ -1,0 +1,48 @@
+version: "3.6"
+
+services:
+  web:
+    image: registry.kinghost.net/devpainel/server-tools:node13
+    container_name: gamification-api-web
+    command: bash -c "npm install && npm start"
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+      - ./:/home/node/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - VIRTUAL_HOST=gamification.api.local
+      - VIRTUAL_PORT=3000
+      - DB_HOST=gamification-database
+      - DB_PORT=3306
+      - DB_NAME=gamification
+      - DB_USER=gamification
+      - DB_PASS=201125
+    ports:
+      - 3000:3000
+    hostname: gamification.api.local
+  database:
+    image: mysql:8.0.16
+    container_name: gamification-database
+    ports:
+      - 3307:3306
+    volumes:
+      - ./dev.mysql.cnf:/etc/mysql/conf.d/my_custom.cnf
+      - ./data/local:/var/lib/mysql
+      - ./data/database.sql:/docker-entrypoint-initdb.d/local.sql
+    environment:
+      - VIRTUAL_HOST=gamification-database
+      - MYSQL_DATABASE=gamification
+      - MYSQL_USER=gamification
+      - MYSQL_PASSWORD=201125
+      - MYSQL_ROOT_PASSWORD=201125
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: gamification-db-phpmyadmin
+    ports:
+      - 8989:80
+    links:
+      - db
+    
+      
