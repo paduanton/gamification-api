@@ -2,9 +2,9 @@ import DatabaseModel from './database'
 
 class LeaderBoardsModel extends DatabaseModel {
 
-    constructor(reportObject) {
+    constructor(leaderBoardsObject) {
         const table = 'leaderboards';
-        super(table, reportObject);
+        super(table, leaderBoardsObject);
     }
 
     findByGenericKey(object, callback) {
@@ -18,15 +18,6 @@ class LeaderBoardsModel extends DatabaseModel {
 
     findOneAndUpdate(id, callback) {
         super.update(id, (err, data) => {
-            if (err) {
-                callback(err);
-            }
-            callback(data);
-        });
-    }
-
-    save(callback) {
-        super.insert((err, data) => {
             if (err) {
                 callback(err);
             }

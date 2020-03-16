@@ -105,3 +105,18 @@ CREATE TABLE IF NOT EXISTS `scores_history` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`users_id`) REFERENCES users (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
+
+DELIMITER $$
+CREATE TRIGGER set_leaderboards
+  AFTER INSERT
+  ON users
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO leaderboards (users_id, total_score)
+    VALUES (NEW.id, '0');
+  END$$
+DELIMITER ;
+
+INSERT INTO `roles` (`id`, `name`) VALUES (NULL, 'especialist');
+INSERT INTO `roles` (`id`, `name`) VALUES (NULL, 'admin');
+INSERT INTO `roles` (`id`, `name`) VALUES (NULL, 'default');
