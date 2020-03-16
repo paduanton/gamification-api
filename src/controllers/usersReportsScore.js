@@ -3,8 +3,8 @@ import ReportsRewards from '../services/reportsRewards'
 
 export function postReportScore(request, response) {
     let UsersReportsScore = {
-        users_id: request.params.userId,
-        reports_id: request.params.reportId
+        users_id: request.params.usersId,
+        reports_id: request.params.reportsId
     };
     const requestBody = request.body;
 
@@ -19,9 +19,10 @@ export function postReportScore(request, response) {
             error: "request body is not properly formated"
         });
     }
-    const score = new ReportsRewards(provider, requestBody.approved, requestBody.has_solution)
+    const reportsRewards = new ReportsRewards(requestBody.provider, requestBody.approved, requestBody.has_solution)
+    const score = reportsRewards.getScore();
     UsersReportsScore.value = score.toString();
-    
+
     const newModel = new UsersReportsScoreModel(UsersReportsScore);
     newModel.save((data) => {
         if (!data) {
@@ -39,6 +40,7 @@ export function postReportScore(request, response) {
         }
 
         if (data.id) {
+            data.value = Number(data.value);
             return response.status(201).json(data);
         }
 

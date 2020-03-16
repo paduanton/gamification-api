@@ -19,7 +19,7 @@ const routes = (app) => {
         .put(putReport)
         .delete(deleteReport);
 
-    app.route('/users/:userId/reports/:reportsId/score')
+    app.route('/users/:usersId/reports/:reportsId/score')
         .post(postReportScore);
 }
 

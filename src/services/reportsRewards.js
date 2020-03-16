@@ -11,17 +11,19 @@ class ReportsRewards {
             case 'wiki interna':
                 if (this.approved === true) {
                     if (this.hasSolution === true) {
-                        return getScoreApprovedReportHasSolutionWikiInterna();
+                        return this.getScoreApprovedReportHasSolutionWikiInterna();
                     }
-                    return getScoreApprovedReportWikiInterna();
+                    return this.getScoreApprovedReportWikiInterna();
                 }
+                return null;
             case 'wiki externa':
                 if (this.approved === true) {
                     if (this.hasSolution === true) {
-                        return getScoreApprovedReportHasSolutionWikiExterna();
+                        return this.getScoreApprovedReportHasSolutionWikiExterna();
                     }
-                    return getScoreApprovedReportWikiExterna();
+                    return this.getScoreApprovedReportWikiExterna();
                 }
+                return null;
             default:
                 return null;
         }
