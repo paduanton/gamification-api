@@ -19,6 +19,13 @@ export function postReportScore(request, response) {
             error: "request body is not properly formated"
         });
     }
+
+    if(requestBody.value !== true) {
+        return response.status(400).json({
+            error: "invalid value of 'approved' key"
+        });
+    }
+
     const reportsRewards = new ReportsRewards(requestBody.provider, requestBody.approved, requestBody.has_solution)
     const score = reportsRewards.getScore();
     UsersReportsScore.value = score.toString();
