@@ -55,6 +55,21 @@ class DatabaseModel {
         }
     }
 
+    selectByGenericKey(object, callback) {
+        const sql = `SELECT * FROM ${this.table} WHERE ?`;
+        try {
+            this.connection.query(sql, object, (err, result) => {
+                if (err) {
+                    console.log("err durante selectByGenericKey(): " + err);
+                    callback(err, null);
+                }
+                callback(null, result[0]);
+            });
+        } catch (error) {
+            console.log('selectByGenericKey', error)
+        }
+    }
+
     insert(callback) {
         const sql = `INSERT INTO ${this.table} SET ?`
         try {
