@@ -7,8 +7,8 @@ class LeaderBoardsModel extends DatabaseModel {
         super(table, reportObject);
     }
 
-    save(callback) {
-        super.insert((err, data) => {
+    findByGenericKey(object, callback) {
+        super.selectByGenericKey(object, (err, data) => {
             if (err) {
                 callback(err);
             }
@@ -16,8 +16,17 @@ class LeaderBoardsModel extends DatabaseModel {
         });
     }
 
-    findByGenericKey(object, callback) {
-        super.selectByGenericKey(object, (err, data) => {
+    findOneAndUpdate(id, callback) {
+        super.update(id, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
+    }
+
+    save(callback) {
+        super.insert((err, data) => {
             if (err) {
                 callback(err);
             }
