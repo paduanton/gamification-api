@@ -1,0 +1,26 @@
+import LeaderboardsModel from '../models/leaderboards'
+
+const model = new LeaderboardsModel();
+
+export function getUsersScore(request, response) {
+    const usersId = request.params.usersId;
+
+    if (usersId != Number(usersId)) {
+        return response.status(400).json({
+            error: "id param must be int"
+        });
+    }
+
+    if (Object.keys(request.body).length !== 0) {
+        return response.status(400).json({
+            error: "GET request must not have a body"
+        });
+    }
+
+    model.findByGenericKey({users_id: usersId}, (data) => {
+        if (!data) {
+            return response.status(404).json({});
+        }
+        return response.status(200).json(data);
+    });
+}

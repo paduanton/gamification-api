@@ -1,7 +1,8 @@
 
 import { getReports, getReport, postReport, putReport, deleteReport } from '../controllers/reports'
 import { getUser, postUser } from '../controllers/users'
-import {postReportScore} from '../controllers/usersReportsScore'
+import { postReportScore } from '../controllers/usersReportsScore'
+import { getUsersScore } from '../controllers/leaderboards'
 
 const routes = (app) => {
     app.route('/users')
@@ -21,6 +22,9 @@ const routes = (app) => {
 
     app.route('/users/:usersId/reports/:reportsId/score')
         .post(postReportScore);
+
+    app.route('/users/:usersId/score')
+        .get(getUsersScore);
 }
 
 export default routes

@@ -16,8 +16,8 @@ class LeaderBoardsModel extends DatabaseModel {
         });
     }
 
-    findByUsersId(id, callback) {
-        super.selectByGenericKey(id, (err, data) => {
+    findByGenericKey(object, callback) {
+        super.selectByGenericKey(object, (err, data) => {
             if (err) {
                 callback(err);
             }
@@ -26,4 +26,4 @@ class LeaderBoardsModel extends DatabaseModel {
     }
 }
 
-module.exports = ReportsModel;
+module.exports = LeaderBoardsModel;
