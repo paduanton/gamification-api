@@ -1,5 +1,6 @@
 import UsersReportsScoreModel from '../models/usersReportsScore'
 import ReportsRewards from '../services/reportsRewards'
+import { updateUsersLeaderboards } from '../controllers/leaderboards'
 
 export function postReportScore(request, response) {
     let UsersReportsScore = {
@@ -20,7 +21,7 @@ export function postReportScore(request, response) {
         });
     }
 
-    if(requestBody.value !== true) {
+    if(requestBody.approved !== true) {
         return response.status(400).json({
             error: "invalid value of 'approved' key"
         });
@@ -48,6 +49,13 @@ export function postReportScore(request, response) {
 
         if (data.id) {
             data.value = Number(data.value);
+
+            console.log('dasdsadsa')
+            updateUsersLeaderboards(UsersReportsScore.usersId, data.value, (response) => {
+                console.log(response);
+            });
+
+            console.log('aquiiii')
             return response.status(201).json(data);
         }
 

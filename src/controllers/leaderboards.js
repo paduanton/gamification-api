@@ -24,3 +24,25 @@ export function getUsersScore(request, response) {
         return response.status(200).json(data);
     });
 }
+
+export function updateUsersLeaderboards(usersId, score, callback) {
+    model.findByGenericKey({users_id: usersId}, (leaderboardsObject) => {
+
+        if(leaderboardsObject.id) {
+            const oldScore = leaderboardsObject.total_score;
+            const newScore = oldScore + score;
+
+            const leaderboards = {
+                users_id: usersId,
+                total_score: newScore
+            };
+
+            const newModel = new LeaderboardsModel(leaderboards);
+            newModel.findOneAndUpdate(id, (data) => {    
+                if (data.affectedRows === 1) {
+                    callback(data);
+                }
+            });
+        }
+    });
+}
