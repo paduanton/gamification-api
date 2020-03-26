@@ -1,6 +1,8 @@
 import UsersReportsScoreModel from '../models/usersReportsScore'
 import ReportsRewards from '../services/reportsRewards'
 import { updateUsersLeaderboards } from '../controllers/leaderboards'
+import ReportsModel from '../models/reports'
+import e from 'express';
 
 export function postReportScore(request, response) {
     let UsersReportsScore = {
@@ -21,9 +23,23 @@ export function postReportScore(request, response) {
         });
     }
 
-    if(requestBody.approved !== true) {
-        return response.status(400).json({
-            error: "invalid value of 'approved' key"
+    if (requestBody.approved === false) {
+        const reportsModel = new ReportsModel({ approved: false });
+        reportsModel.findOneAndUpdate(UsersReportsScore.users_id, (data) => {
+            if (data.affectedRows !== 1) {
+                throw new ErrorEvent("Could not update reports table");
+            }
+        });
+
+        return response.status(200).json({
+            message: "users report has been update to not approved"
+        });
+    } else {
+        const reportsModel = new ReportsModel({ approved: true });
+        reportsModel.findOneAndUpdate(UsersReportsScore.users_id, (data) => {
+            if (data.affectedRows !== 1) {
+                throw new ErrorEvent("Could not update reports table");
+            }
         });
     }
 
@@ -49,13 +65,11 @@ export function postReportScore(request, response) {
 
         if (data.id) {
             data.value = Number(data.value);
-
-            console.log('dasdsadsa')
-            updateUsersLeaderboards(UsersReportsScore.usersId, data.value, (response) => {
+            
+            updateUsersLeaderboards(UsersReportsScore.users_id, data.value, (response) => {
                 console.log(response);
             });
 
-            console.log('aquiiii')
             return response.status(201).json(data);
         }
 

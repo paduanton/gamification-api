@@ -24,6 +24,15 @@ class LeaderBoardsModel extends DatabaseModel {
             callback(data);
         });
     }
+
+    save(callback) {
+        super.insert((err, data) => {
+            if (err) {
+                callback(err);
+            }
+            callback(data);
+        });
+    }
 }
 
 module.exports = LeaderBoardsModel;

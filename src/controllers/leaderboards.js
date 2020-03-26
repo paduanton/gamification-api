@@ -44,5 +44,7 @@ export function updateUsersLeaderboards(usersId, score, callback) {
                 }
             });
         }
+
+        
     });
 }
