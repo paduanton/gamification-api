@@ -17,7 +17,7 @@ export function getUsersScore(request, response) {
         });
     }
 
-    model.findByGenericKey({users_id: usersId}, (data) => {
+    model.findByGenericKey({ users_id: usersId }, (data) => {
         if (!data) {
             return response.status(404).json({});
         }
@@ -25,10 +25,13 @@ export function getUsersScore(request, response) {
     });
 }
 
-export function updateUsersLeaderboards(usersId, score, callback) {
-    model.findByGenericKey({users_id: usersId}, (leaderboardsObject) => {
-
-        if(leaderboardsObject.id) {
+export function updateUsersLeaderboards(usersId, score) {
+    console.log('1')
+    model.findByGenericKey({ users_id: usersId }, (leaderboardsObject) => {
+        console.log('aqui')
+        console.log(leaderboardsObject)
+        console.log('dsadasdas')
+        if (leaderboardsObject.id) {
             const oldScore = leaderboardsObject.total_score;
             const newScore = oldScore + score;
 
@@ -38,13 +41,12 @@ export function updateUsersLeaderboards(usersId, score, callback) {
             };
 
             const newModel = new LeaderboardsModel(leaderboards);
-            newModel.findOneAndUpdate(id, (data) => {    
-                if (data.affectedRows === 1) {
-                    callback(data);
+            newModel.findOneAndUpdate(id, (data) => {
+                if (data.affectedRows !== 1) {
+                    throw new ErrorEvent("Could not update reports table");
                 }
             });
         }
 
-        
     });
 }

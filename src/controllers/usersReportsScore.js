@@ -66,9 +66,7 @@ export function postReportScore(request, response) {
         if (data.id) {
             data.value = Number(data.value);
             
-            updateUsersLeaderboards(UsersReportsScore.users_id, data.value, (response) => {
-                console.log(response);
-            });
+            updateUsersLeaderboards(UsersReportsScore.users_id, data.value);
 
             return response.status(201).json(data);
         }
