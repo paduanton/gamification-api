@@ -2,6 +2,39 @@ import UsersModel from '../models/users'
 
 const model = new UsersModel();
 
+export function getUsers(request, response) {
+    const intranetLoginQuery = request.query.intranetLogin || null;
+    console.log(intranetLoginQuery)
+    if (Object.keys(request.body).length !== 0) {
+        return response.status(400).json({
+            error: "GET request must not have a body"
+        });
+    }
+
+    if(intranetLoginQuery) {
+        model.findByGenericKey({intranet_login: intranetLoginQuery}, (data) => {
+            if (!data) {
+                return response.status(404).json({});
+            }
+            return response.status(200).json(data);
+        });
+    }
+
+    model.find((data) => {
+        if (Array.isArray(data) === false) {
+            return response.status(400).json({
+                error: "can't reach database"
+            });
+        }
+
+        if (data.length === 0) {
+            return response.status(404).json({});
+        }
+
+        return response.status(200).json(data);
+    });
+}
+
 export function getUser(request, response) {
     const id = request.params.id;
 
