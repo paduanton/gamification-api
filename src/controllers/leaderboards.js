@@ -33,7 +33,6 @@ export async function updateUsersLeaderboards(usersId, score) {
                 const newScore = oldScore + score;
 
                 const leaderboards = {
-                    users_id: usersId,
                     total_score: newScore
                 };
 
