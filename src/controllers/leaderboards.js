@@ -25,28 +25,31 @@ export function getUsersScore(request, response) {
     });
 }
 
-export function updateUsersLeaderboards(usersId, score) {
-    console.log('1')
-    model.findByGenericKey({ users_id: usersId }, (leaderboardsObject) => {
-        console.log('aqui')
-        console.log(leaderboardsObject)
-        console.log('dsadasdas')
-        if (leaderboardsObject.id) {
-            const oldScore = leaderboardsObject.total_score;
-            const newScore = oldScore + score;
-
-            const leaderboards = {
-                users_id: usersId,
-                total_score: newScore
-            };
-
-            const newModel = new LeaderboardsModel(leaderboards);
-            newModel.findOneAndUpdate(id, (data) => {
-                if (data.affectedRows !== 1) {
-                    throw new ErrorEvent("Could not update reports table");
-                }
-            });
+export function updateUsersLeaderboards(usersId, score, callback) {
+    callback(score);
+    model.findByGenericKey({ users_id: usersId }, (data) => {
+        console.log('retet333e');
+        callback(data);
+        if (!data) {
+        console.log('retete')
         }
-
+        console.log('aqui')
     });
+        // if (leaderboardsObject.id) {
+        //     const oldScore = leaderboardsObject.total_score;
+        //     const newScore = oldScore + score;
+
+        //     const leaderboards = {
+        //         users_id: usersId,
+        //         total_score: newScore
+        //     };
+
+        //     const newModel = new LeaderboardsModel(leaderboards);
+        //     newModel.findOneAndUpdate(leaderboardsObject.id, (data) => {
+        //         if (data.affectedRows !== 1) {
+        //             throw new ErrorEvent("Could not update leaderboards table");
+        //         }
+        //     });
+        // }
+
 }

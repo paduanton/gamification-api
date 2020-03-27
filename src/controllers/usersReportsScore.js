@@ -66,7 +66,11 @@ export function postReportScore(request, response) {
         if (data.id) {
             data.value = Number(data.value);
             
-            updateUsersLeaderboards(UsersReportsScore.users_id, data.value);
+            updateUsersLeaderboards(UsersReportsScore.users_id, data.value, (data)=> {
+                console.log('aqio')
+                console.log(data);
+                return response.status(201).json(data);
+            });
 
             return response.status(201).json(data);
         }
