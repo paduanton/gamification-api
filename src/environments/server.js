@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('./base');
 
 const { SERVER_PORT } = process.env;
 const serverEnvironment = {

@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('./base');
 
 const {
     DB_HOST, DB_PORT,
