@@ -1,4 +1,4 @@
-require('./base');
+import './base';
 
 const {
     DB_HOST, DB_PORT,
