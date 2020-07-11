@@ -1,9 +1,19 @@
-const environment = {
-    MONGO_USERNAME,
-    MONGO_PASSWORD,
-    MONGO_HOSTNAME,
-    MONGO_PORT,
-    MONGO_DB
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const {
+    DB_HOST, DB_PORT,
+    DB_NAME, DB_USER,
+    DB_PASS
 } = process.env;
 
-module.exports = environment;
+const databaseEnvironment = {
+    DB_HOST: DB_HOST,
+    DB_PORT: DB_PORT,
+    DB_NAME: DB_NAME,
+    DB_USER: DB_USER,
+    DB_PASS: DB_PASS
+};
+
+module.exports = databaseEnvironment;

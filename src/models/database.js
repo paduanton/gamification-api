@@ -1,18 +1,21 @@
-import mysql from "mysql";
-import dotenv from "dotenv";
+import mysql from 'mysql';
+import {
+    DB_HOST, DB_PORT,
+    DB_NAME, DB_USER,
+    DB_PASS
+} from '../../src/environments/database';
 
 class DatabaseModel {
 
     constructor(table, modelObject) {
-        dotenv.config();
 
         this.connection = mysql.createPool({
-            connectionLimit : 20,
-            host: `${process.env.DB_HOST}`,
-            port: `${process.env.DB_PORT}`,
-            user: `${process.env.DB_USER}`,
-            password: `${process.env.DB_PASS}`,
-            database: `${process.env.DB_NAME}`,
+            connectionLimit: 5,
+            host: DB_HOST,
+            port: DB_PORT,
+            database: DB_NAME,
+            user: DB_USER,
+            password: DB_PASS
         });
 
         this.table = table;
