@@ -2,7 +2,6 @@ import UsersReportsScoreModel from '../models/usersReportsScore'
 import ReportsRewards from '../services/reportsRewards'
 import { updateUsersLeaderboards } from '../controllers/leaderboards'
 import ReportsModel from '../models/reports'
-import e from 'express';
 
 export function postReportScore(request, response) {
     try {

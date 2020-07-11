@@ -35,7 +35,7 @@ class DatabaseModel {
     }
 
     selectById(id, callback) {
-        const sql = `SELECT * FROM ${this.table} WHERE id = ${id}`;
+        const sql = `SELECT * FROM ${this.table} WHERE id = ${id} LIMIT 1`;
         try {
             this.connection.query(sql, (err, result) => {
                 if (err) {

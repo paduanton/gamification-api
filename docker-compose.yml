@@ -1,0 +1,30 @@
+version: "3.6"
+
+networks:
+  gamification:
+    driver: bridge
+
+services:
+  db:
+    container_name: gamificationdb
+    environment:
+      MYSQL_ROOT_PASSWORD: "Sv7Qaw6=^8Q-Bwt&"
+      MYSQL_PASSWORD: "9aCSV23Dth5X"
+      MYSQL_DATABASE: "gamification"
+      MYSQL_USER: "gamification"
+    image: mysql:5.7
+    networks:
+      - gamification
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./data/storage/database:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: gamificationmyadmin
+    networks:
+      - gamification
+    ports:
+      - 8181:80
