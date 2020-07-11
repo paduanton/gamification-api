@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `roles_id` int NOT NULL,
+  `roles_id` int NOT NULL DEFAULT 3,
   `name` varchar(30) NOT NULL,
   `last_name` varchar(70) NOT NULL,
   `intranet_login` varchar(25) UNIQUE NOT NULL,
@@ -89,8 +89,8 @@ INSERT INTO leaderboards (users_id, total_score)
 VALUES (NEW.id, '0');
 END $$ DELIMITER ;
 INSERT INTO `roles` (`id`, `name`)
-VALUES (NULL, 'especialist');
+VALUES (1, 'especialist');
 INSERT INTO `roles` (`id`, `name`)
-VALUES (NULL, 'admin');
+VALUES (2, 'admin');
 INSERT INTO `roles` (`id`, `name`)
-VALUES (NULL, 'default');
+VALUES (3, 'default');
