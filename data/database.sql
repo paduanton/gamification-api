@@ -78,6 +78,8 @@ CREATE TABLE IF NOT EXISTS `action_history` (
   `users_id` int NOT NULL,
   `type` enum('CREATE', 'READ', 'UPDATE', 'DELETE') NOT NULL,
   `description` varchar(255) NOT NULL,
+  `ip` varchar(45) NOT NULL,
+  `browser` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`users_id`) REFERENCES users (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT

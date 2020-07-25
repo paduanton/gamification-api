@@ -1,6 +1,9 @@
 import ReportsModel from '../models/reports'
+import UsersModel from '../models/users'
+import { setUserActionHistory } from '../controllers/actionHistory';
 
 const model = new ReportsModel();
+const usersModel = new UsersModel();
 
 export function getReports(request, response) {
 
@@ -50,6 +53,22 @@ export function getReport(request, response) {
 
 export function postReport(request, response) {
     const requestBody = request.body;
+    const usersId = request.params.usersId;
+    let reportObject = requestBody;
+
+    if (usersId != Number(usersId)) {
+        return response.status(400).json({
+            error: "id param must be int"
+        });
+    }
+
+    usersModel.findById(usersId, (data) => {
+        if (!data) {
+            return response.status(404).json({
+                'message': 'Could not find user'
+            });
+        }
+    });
 
     if (Object.keys(requestBody).length === 0) {
         return response.status(400).json({
@@ -63,28 +82,26 @@ export function postReport(request, response) {
         });
     }
 
-    const newModel = new ReportsModel(requestBody);
-    newModel.save((data) => {
+    reportObject.users_id = usersId;
 
-        if(!data) {
-            return response.status(500).json({
-                error: "can't POST data"
-            });
+    const newModel = new ReportsModel(reportObject);
+    newModel.save(async (data) => {
+        try {
+            if (data.id) {
+                const historyDescription = `Você registrou o reporte de id: ${data.id}`;
+
+                const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', usersId);
+                Promise.resolve(actionHistory).then((result) => {
+                    return result;
+                });
+
+                return response.status(201).json(data);
+            }
+
+            return response.status(503).json(data);
+        } catch (error) {
+            console.log(`users/${usersId}/reports error: ${error}`)
         }
-
-        if (data.hasOwnProperty("code")) {
-            return response.status(400).json({
-                code: data.errno,
-                message: data.sqlMessage,
-                serverMessage: data.code
-            });
-        }
-
-        if (data.id) {
-            return response.status(201).json(data);
-        }
-
-        return response.status(503).json(data);
     });
 }
 
@@ -111,8 +128,8 @@ export function putReport(request, response) {
     }
 
     const newModel = new ReportsModel(requestBody);
-    newModel.findOneAndUpdate(id, (data) => {    
-        if(!data) {
+    newModel.findOneAndUpdate(id, (data) => {
+        if (!data) {
             return response.status(500).json({
                 error: "can't POST data"
             });

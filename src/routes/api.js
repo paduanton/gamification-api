@@ -7,6 +7,7 @@ import {
 import { getUsers, getUser, postUser } from '../controllers/users';
 import { postReportScore } from '../controllers/usersReportsScore';
 import { getUsersScore } from '../controllers/leaderboards';
+import { getUsersActionHistory } from '../controllers/actionHistory';
 import { APP_ENV } from '../environments/server';
 
 const routes = (app) => {
@@ -25,7 +26,9 @@ const routes = (app) => {
         .get(getUser);
 
     app.route('/reports')
-        .get(getReports)
+        .get(getReports);
+
+    app.route('/users/:usersId/reports')
         .post(postReport);
 
     app.route('/reports/:id')
@@ -38,6 +41,9 @@ const routes = (app) => {
 
     app.route('/users/:usersId/score')
         .get(getUsersScore);
+
+    app.route('/users/:usersId/history')
+        .get(getUsersActionHistory);
 
 };
 
