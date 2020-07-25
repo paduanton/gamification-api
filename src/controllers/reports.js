@@ -88,7 +88,7 @@ export function postReport(request, response) {
     newModel.save(async (data) => {
         try {
             if (data.id) {
-                const historyDescription = `Você registrou o reporte de id: ${data.id}`;
+                const historyDescription = `Reporte de id: ${data.id} cadastrado`;
 
                 const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', usersId);
                 Promise.resolve(actionHistory).then((result) => {
@@ -128,35 +128,37 @@ export function putReport(request, response) {
     }
 
     const newModel = new ReportsModel(requestBody);
-    newModel.findOneAndUpdate(id, (data) => {
-        if (!data) {
-            return response.status(500).json({
-                error: "can't POST data"
-            });
-        }
+    newModel.findOneAndUpdate(id, async (data) => {
+        try {
+            if (data.id) {
+                const historyDescription = `Reporte de id: ${id} atualizado`;
 
-        if (data.hasOwnProperty("code")) {
-            return response.status(400).json({
-                code: data.errno,
-                message: data.sqlMessage,
-                serverMessage: data.code
-            });
-        }
+                const actionHistory = await setUserActionHistory(request, historyDescription, 'UPDATE', data.users_id);
+                Promise.resolve(actionHistory).then((result) => {
+                    return result;
+                });
 
-        if (data.affectedRows === 1) {
-            return response.status(204).json({});
-        }
+                return response.status(200).json(data);
+            }
 
-        if (data.affectedRows === 0) {
-            return response.status(404).json({});
-        }
 
-        return response.status(503).json(data);
+            return response.status(503).json(data);
+        } catch (error) {
+            console.log(`PUT /reports/${id} error: ${error}`)
+        }
     });
 }
 
 export function deleteReport(request, response) {
     const id = request.params.id;
+
+    model.findById(id, async (data) => {
+        if (!data) {
+            return response.status(404).json({
+                message: `Could not find report ${id}`
+            });
+        }
+    });
 
     if (id != Number(id)) {
         return response.status(400).json({
@@ -170,15 +172,20 @@ export function deleteReport(request, response) {
         });
     }
 
-    model.remove(id, (data) => {
-        if (data.affectedRows === 1) {
-            return response.status(204).json({});
-        }
+    model.remove(id, async (data) => {
+        try {
 
-        if (data.affectedRows === 0) {
-            return response.status(404).json();
-        }
+            if (data.affectedRows === 1) {
+                return response.status(204).json({});
+            }
 
-        return response.status(503).json(data);
+            if (data.affectedRows === 0) {
+                return response.status(404).json();
+            }
+
+            return response.status(503).json(data);
+        } catch (error) {
+            console.log(`DELETE /reports/${id} error: ${error}`)
+        }
     });
 }

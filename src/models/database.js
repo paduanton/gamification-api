@@ -95,7 +95,13 @@ class DatabaseModel {
                     console.log("err durante update(): " + err);
                     callback(err, null);
                 }
-                callback(null, result);
+
+                this.selectById(id, (err, data) => {
+                    if (err) {
+                        throw err;
+                    }
+                    callback(data);
+                });
             });
         } catch (error) {
             console.log('update', error)
@@ -107,9 +113,10 @@ class DatabaseModel {
         try {
             this.connection.query(sql, (err, result) => {
                 if (err) {
-                    console.log("err durante update(): " + err);
+                    console.log("err durante delete(): " + err);
                     callback(err, null);
                 }
+                
                 callback(null, result);
             });
         } catch (error) {

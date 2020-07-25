@@ -1,18 +1,19 @@
 import UsersModel from '../models/users'
+import { setUserActionHistory } from '../controllers/actionHistory';
 
 const model = new UsersModel();
 
 export function getUsers(request, response) {
     const intranetLoginQuery = request.query.intranetLogin || null;
-    console.log(intranetLoginQuery)
+
     if (Object.keys(request.body).length !== 0) {
         return response.status(400).json({
             error: "GET request must not have a body"
         });
     }
 
-    if(intranetLoginQuery) {
-        model.findByGenericKey({intranet_login: intranetLoginQuery}, (data) => {
+    if (intranetLoginQuery) {
+        model.findByGenericKey({ intranet_login: intranetLoginQuery }, (data) => {
             if (!data) {
                 return response.status(404).json({});
             }
@@ -74,25 +75,22 @@ export function postUser(request, response) {
     }
 
     const newModel = new UsersModel(requestBody);
-    newModel.save((data) => {
-        if(!data) {
-            return response.status(500).json({
-                error: "can't POST data"
-            });
-        }
+    newModel.save(async (data) => {
+        try {
+            if (data.id) {
+                const historyDescription = `Usuário de id: ${data.id} cadastrado no sistema`;
 
-        if (data.hasOwnProperty("code")) {
-            return response.status(400).json({
-                code: data.errno,
-                message: data.sqlMessage,
-                serverMessage: data.code
-            });
-        }
+                const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', data.id);
+                Promise.resolve(actionHistory).then((result) => {
+                    return result;
+                });
 
-        if (data.id) {
-            return response.status(201).json(data);
-        }
+                return response.status(201).json(data);
+            }
 
-        return response.status(503).json(data);
+            return response.status(503).json(data);
+        } catch (error) {
+            console.log(`POST /users error: ${error}`)
+        }
     });
 }
