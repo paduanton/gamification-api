@@ -20,6 +20,7 @@ services:
     restart: always
     volumes:
       - ./data/storage/database:/var/lib/mysql
+      # - ./data/database.sql:/docker-entrypoint-initdb.d/local.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

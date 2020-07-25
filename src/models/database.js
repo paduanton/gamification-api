@@ -10,7 +10,7 @@ class DatabaseModel {
     constructor(table, modelObject) {
 
         this.connection = mysql.createPool({
-            connectionLimit: 5,
+            connectionLimit: 20,
             host: DB_HOST,
             port: DB_PORT,
             database: DB_NAME,

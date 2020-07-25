@@ -1,10 +1,22 @@
 
-import { getReports, getReport, postReport, putReport, deleteReport } from '../controllers/reports'
-import { getUsers, getUser, postUser } from '../controllers/users'
-import { postReportScore } from '../controllers/usersReportsScore'
-import { getUsersScore } from '../controllers/leaderboards'
+import {
+    getReports, getReport,
+    postReport, putReport,
+    deleteReport
+} from '../controllers/reports';
+import { getUsers, getUser, postUser } from '../controllers/users';
+import { postReportScore } from '../controllers/usersReportsScore';
+import { getUsersScore } from '../controllers/leaderboards';
+import { APP_ENV } from '../environments/server';
 
 const routes = (app) => {
+    app.route('/')
+        .get(function (request, response) {
+            return response.status(200).json(
+                ['gamification-v1-api', new Date().toString(), APP_ENV]
+            );
+        });
+
     app.route('/users')
         .get(getUsers)
         .post(postUser);
@@ -26,6 +38,7 @@ const routes = (app) => {
 
     app.route('/users/:usersId/score')
         .get(getUsersScore);
-}
 
-export default routes
+};
+
+module.exports = routes;
