@@ -17,10 +17,7 @@ class LeaderBoardsModel extends DatabaseModel {
     }
 
     findOneAndUpdate(id, callback) {
-        super.update(id, (err, data) => {
-            if (err) {
-                callback(err);
-            }
+        super.update(id, (data) => {
             callback(data);
         });
     }

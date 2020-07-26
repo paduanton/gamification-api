@@ -38,8 +38,8 @@ export async function updateUsersLeaderboards(usersId, score) {
 
                 const newModel = new LeaderboardsModel(leaderboards);
                 newModel.findOneAndUpdate(data.id, (data) => {
-                    if (data.affectedRows !== 1) {
-                        throw new ErrorEvent("Could not update leaderboards table");
+                    if (!data) {
+                        throw ("Could not update leaderboards");
                     }
                 });
 

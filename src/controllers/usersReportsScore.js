@@ -2,6 +2,7 @@ import UsersReportsScoreModel from '../models/usersReportsScore'
 import ReportsRewards from '../services/reportsRewards'
 import { updateUsersLeaderboards } from '../controllers/leaderboards'
 import ReportsModel from '../models/reports'
+import { setUserActionHistory } from '../controllers/actionHistory';
 
 export function postReportScore(request, response) {
     try {
@@ -26,19 +27,23 @@ export function postReportScore(request, response) {
         if (requestBody.approved === false) {
             const reportsModel = new ReportsModel({ approved: false });
             reportsModel.findOneAndUpdate(UsersReportsScore.users_id, (data) => {
-                if (data.affectedRows !== 1) {
-                    throw new ErrorEvent("Could not update reports table");
+                if (!data) {
+                    return response.status(200).json({
+                        message: "Could not update report"
+                    });
                 }
             });
 
             return response.status(200).json({
-                message: "users report has been update to not approved"
+                message: "user report has been update to not approved"
             });
         } else {
             const reportsModel = new ReportsModel({ approved: true });
             reportsModel.findOneAndUpdate(UsersReportsScore.users_id, (data) => {
-                if (data.affectedRows !== 1) {
-                    throw new ErrorEvent("Could not update reports table");
+                if (!data) {
+                    return response.status(200).json({
+                        message: "Could not update report"
+                    });
                 }
             });
         }
@@ -50,11 +55,18 @@ export function postReportScore(request, response) {
         const newModel = new UsersReportsScoreModel(UsersReportsScore);
         newModel.save(async (data) => {
             try {
+
                 if (data.id) {
                     data.value = Number(data.value);
 
                     const leaderboardsResponse = await updateUsersLeaderboards(UsersReportsScore.users_id, data.value);
                     Promise.resolve(leaderboardsResponse).then((result) => {
+                        return result;
+                    });
+                    
+                    const historyDescription = `Usuário de id: ${UsersReportsScore.users_id} ganhou ${data.value} pontos pelo reporte ${UsersReportsScore.reports_id}`;
+                    const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', UsersReportsScore.users_id);
+                    Promise.resolve(actionHistory).then((result) => {
                         return result;
                     });
 
@@ -63,7 +75,7 @@ export function postReportScore(request, response) {
 
                 return response.status(503).json(data);
             } catch (error) {
-                console.log(`users/${UsersReportsScore.users_id}/score error: ${error}`)
+                console.log(`users/${UsersReportsScore.users_id}/reports/${UsersReportsScore.reports_id}/score error: ${error}`)
             }
 
         });

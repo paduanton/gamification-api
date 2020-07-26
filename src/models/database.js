@@ -60,7 +60,13 @@ class DatabaseModel {
                     console.log("err durante selectByGenericKey(): " + err);
                     callback(err, null);
                 }
-                callback(null, result[0]);
+
+                if(result.length === 1) {
+                    callback(null, result[0]);
+                } else {
+                    callback(null, result);
+                }
+                
             });
         } catch (error) {
             console.log('selectByGenericKey', error)
@@ -93,7 +99,7 @@ class DatabaseModel {
             this.connection.query(sql, this.modelObject, (err, result) => {
                 if (err) {
                     console.log("err durante update(): " + err);
-                    callback(err, null);
+                    callback(null);
                 }
 
                 this.selectById(id, (err, data) => {
