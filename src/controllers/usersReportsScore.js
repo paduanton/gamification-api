@@ -64,7 +64,7 @@ export function postReportScore(request, response) {
                         return result;
                     });
                     
-                    const historyDescription = `Usuário de id: ${UsersReportsScore.users_id} ganhou ${data.value} pontos pelo reporte ${UsersReportsScore.reports_id}`;
+                    const historyDescription = `Usuário de id: ${UsersReportsScore.users_id} ganhou ${data.value} pontos pelo reporte de id: ${UsersReportsScore.reports_id}`;
                     const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', UsersReportsScore.users_id);
                     Promise.resolve(actionHistory).then((result) => {
                         return result;

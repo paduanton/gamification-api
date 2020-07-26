@@ -78,7 +78,7 @@ export function postUser(request, response) {
     newModel.save(async (data) => {
         try {
             if (data.id) {
-                const historyDescription = `Usuário de id: ${data.id} cadastrado no sistema`;
+                const historyDescription = `Usuário cadastrado no sistema`;
 
                 const actionHistory = await setUserActionHistory(request, historyDescription, 'CREATE', data.id);
                 Promise.resolve(actionHistory).then((result) => {
