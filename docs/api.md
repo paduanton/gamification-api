@@ -15,6 +15,9 @@
 | 11 | /users/**<int:id>**/score | GET | lista o total de pontos de um usuário **<int:id>** |
 | 12 | /users/**<int:id>**/history | GET |lista todo histórico de ações que um usuário **<int:id>** teve no sistema |
 
+
+## Descrição dos endpoints
+--- 
 ### LISTAR DADOS SOMENTE DO RESPECTIVO USUÁRIO -> intranetLogin
 
 #### REQUEST:
