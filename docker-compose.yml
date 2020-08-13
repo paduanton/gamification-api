@@ -1,0 +1,44 @@
+version: "3.6"
+
+networks:
+  gamification:
+    driver: bridge
+
+services:
+  db:
+    container_name: gamificationdb
+    environment:
+      MYSQL_ROOT_PASSWORD: "Sv7Qaw6=^8Q-Bwt&"
+      MYSQL_PASSWORD: $DB_PASS
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+    image: mysql:5.7
+    networks:
+      - gamification
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./data/storage/database:/var/lib/mysql
+      # - ./data/database.sql:/docker-entrypoint-initdb.d/local.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: gamificationmyadmin
+    networks:
+      - gamification
+    ports:
+      - 8181:80
+
+  # web:
+  #   container_name: gamificationweb
+  #   build: .
+  #   volumes:
+  #     - './:/app'
+  #   ports:
+  #     - $SERVER_PORT:$SERVER_PORT
+  #   command: >
+  #     bash -c "npm start"
+  #   depends_on:
+  #     - db
+

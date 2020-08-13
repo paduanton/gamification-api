@@ -1,10 +1,11 @@
 {
   "name": "gamification-api",
   "version": "1.0.0",
-  "description": "Resftul Gamification API for content production purposes",
+  "description": "Resftul Gamification API that's a part of a project to stimulate knowledge consumption for content production purposes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js --exec babel-node --presets babel-preset-env"
   },
   "repository": {
     "type": "git",
@@ -12,7 +13,7 @@
   },
   "keywords": [
     "gamification",
-    "resfult",
+    "restful",
     "api"
   ],
   "author": "Antonio de Pádua",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/paduanton/gamification-api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1"
   },
