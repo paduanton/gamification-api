@@ -2,36 +2,18 @@
 
 | Índice | Recurso  | Método HTTP Header | Descrição |
 | ------------- | ------------- | ------------- | ------------- |
-
-
 | 1	| /users?intranetLogin=	| GET | lista um usuário filtrando pelo respectivo intranetLogin |
-
 | 2	| /users | GET | lista todos usuários |
-
 | 3	| /users | POST | adiciona um novo usuário |
-
 | 4	| /users/<int:id> | GET | lista dados somente do respectivo usuário <int:id> |
-
 | 5	| /reports | GET | lista todos reportes |
-
 | 6	| /reports/<int:id> | GET | lista dados somente do respectivo reporte <int:id> |
-
 | 7	| /users/<int:id>/reports | POST | adiciona um novo reporte para um usuário <int:id> |
-
 | 8	| /reports/<int:id> | PUT | altera dados de um respectivo reporte <int:id> |
-
 | 9	| /reports/<int:id> | DELETE | deleta o respectivo reporte <int:id> |
-
 | 10 | /users/<int:id>/reports/<int:id>/score | POST | adiciona uma nova pontuação vinculada ao reporte de um usuário |
-
 | 11 | /users/<int:id>/score | GET | lista o total de pontos de um usuário <int:id> |
-
 | 12 | /users/<int:id>/history | GET |lista todo histórico de ações que um usuário <int:id> teve no sistema |
-
-
-
-
-
 
 ### LISTAR DADOS SOMENTE DO RESPECTIVO USUÁRIO -> intranetLogin
 

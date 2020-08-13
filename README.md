@@ -47,4 +47,4 @@ npm start
 * Todos os endpoints retornam o formato `application/json`
 * Todas requisições devem conter o header `Accept` : `application/json`
 * Todas requisições POST e PUT devem conter o header `Content-Type` : `application/json`
-* O projeto usa a biblioteca [Express.js](https://expressjs.com/pt-br/) para a base do projeto 
+* A aplicação usa a biblioteca [Express.js](https://expressjs.com/pt-br/) para a base da construção da API 
