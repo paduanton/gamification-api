@@ -2,18 +2,18 @@
 
 | Índice | Recurso  | Método HTTP Header | Descrição |
 | ------------- | ------------- | ------------- | ------------- |
-| 1	| /users?intranetLogin=	| GET | lista um usuário filtrando pelo respectivo intranetLogin |
+| 1	| /users?**intranetLogin=**	| GET | lista um usuário filtrando pelo respectivo intranetLogin |
 | 2	| /users | GET | lista todos usuários |
 | 3	| /users | POST | adiciona um novo usuário |
-| 4	| /users/<int:id> | GET | lista dados somente do respectivo usuário <int:id> |
+| 4	| /users/**<int:id>** | GET | lista dados somente do respectivo usuário **<int:id>** |
 | 5	| /reports | GET | lista todos reportes |
-| 6	| /reports/<int:id> | GET | lista dados somente do respectivo reporte <int:id> |
-| 7	| /users/<int:id>/reports | POST | adiciona um novo reporte para um usuário <int:id> |
-| 8	| /reports/<int:id> | PUT | altera dados de um respectivo reporte <int:id> |
-| 9	| /reports/<int:id> | DELETE | deleta o respectivo reporte <int:id> |
-| 10 | /users/<int:id>/reports/<int:id>/score | POST | adiciona uma nova pontuação vinculada ao reporte de um usuário |
-| 11 | /users/<int:id>/score | GET | lista o total de pontos de um usuário <int:id> |
-| 12 | /users/<int:id>/history | GET |lista todo histórico de ações que um usuário <int:id> teve no sistema |
+| 6	| /reports/**<int:id>** | GET | lista dados somente do respectivo reporte **<int:id>** |
+| 7	| /users/**<int:id>**/reports | POST | adiciona um novo reporte para um usuário **<int:id>** |
+| 8	| /reports/**<int:id>** | PUT | altera dados de um respectivo reporte **<int:id>** |
+| 9	| /reports/****<int:id>****| DELETE | deleta o respectivo reporte **<int:id>** |
+| 10 | /users/**<int:id>**/reports/**<int:id>**/score | POST | adiciona uma nova pontuação vinculada ao reporte de um usuário |
+| 11 | /users/**<int:id>**/score | GET | lista o total de pontos de um usuário **<int:id>** |
+| 12 | /users/**<int:id>**/history | GET |lista todo histórico de ações que um usuário **<int:id>** teve no sistema |
 
 ### LISTAR DADOS SOMENTE DO RESPECTIVO USUÁRIO -> intranetLogin
 
@@ -121,12 +121,12 @@ Body:
 }
 ```
 
-### LISTAR DADOS SOMENTE DO RESPECTIVO USUÁRIO <int:id>
+### LISTAR DADOS SOMENTE DO RESPECTIVO USUÁRIO **<int:id>**
 
 #### REQUEST:
 
 `
-GET /users/<int:id>
+GET /users/**<int:id>**
 `
 
 #### RESPONSE:
@@ -153,7 +153,7 @@ Body:
 #### REQUEST:
 
 `
-POST /users/<int:id>/reports
+POST /users/**<int:id>**/reports
 `
 
 ```json
@@ -187,12 +187,12 @@ Body:
 }
 ```
 
-### LISTAR DADOS SOMENTE DO RESPECTIVO REPORTE <int:id>
+### LISTAR DADOS SOMENTE DO RESPECTIVO REPORTE **<int:id>**
 
 #### REQUEST:
 
 `
-GET /reports/<int:id>
+GET /reports/**<int:id>**
 `
 
 #### RESPONSE:
@@ -256,12 +256,12 @@ Body:
 ]
 ```
 
-### ALTERAR DADOS DE UM RESPECTIVO REPORTE <int:id>
+### ALTERAR DADOS DE UM RESPECTIVO REPORTE **<int:id>**
 
 #### REQUEST:
 
 `
-PUT /reports/<int:id>
+PUT /reports/**<int:id>**
 `
 
 ```json
@@ -279,12 +279,12 @@ Body:
 Status: 204 No Content
 ```
 
-### DELETAR O RESPECTIVO REPORTE <int:id>
+### DELETAR O RESPECTIVO REPORTE **<int:id>**
 
 #### REQUEST:
 
 `
-DELETE /reports/<int:id>
+DELETE /reports/**<int:id>**
 `
 
 #### RESPONSE:
@@ -298,7 +298,7 @@ Status: 204 No Content
 #### REQUEST:
 
 `
-POST /users/<int:id>/reports/<int:id>/score
+POST /users/**<int:id>**/reports/**<int:id>**/score
 `
 
 ```json
@@ -333,7 +333,7 @@ Body:
 #### REQUEST:
 
 `
-GET /users/<int:id>/score
+GET /users/**<int:id>**/score
 `
 
 #### RESPONSE:
@@ -352,12 +352,12 @@ Body:
 }
 ```
 
-### LISTAR HISTÓRICO DE AÇÕES QUE UM USUÁRIO <int:id> TEVE NO SISTEMA
+### LISTAR HISTÓRICO DE AÇÕES QUE UM USUÁRIO **<int:id>** TEVE NO SISTEMA
 
 #### REQUEST:
 
 `
-GET /users/<int:id>/history
+GET /users/**<int:id>**/history
 `
 
 #### RESPONSE:
